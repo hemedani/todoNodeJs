@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/hemedani/todoNodeJs.git",
   "author": "Syd Amir <hemedani@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.6.1"
+  }
 }
