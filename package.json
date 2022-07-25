@@ -1,0 +1,8 @@
+{
+  "name": "todoNodeJs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hemedani/todoNodeJs.git",
+  "author": "Syd Amir <hemedani@gmail.com>",
+  "license": "MIT"
+}
