@@ -2,36 +2,30 @@ import { time } from "console";
 import http, { ServerResponse, ClientRequest } from "http";
 import { url } from "inspector";
 import { todos } from "./todos"
-import { createTodo } from "./createTodo";
+import { createTask } from "./createTask";
 import { readTask } from "./readTask";
 import { updateTask } from "./updateTask";
 import { deleteTask } from "./deleteTask";
+import { returnedResponse } from "./returnedResponse";
+
 const host = "localhost";
 const port = 8000;
 
+const getParameters=(reqParameter : string , myurl : URL)=> myurl.searchParams.get(reqParameter);
 
 const requestListener = function (req: Request, res: ServerResponse) {
 
   const myUrl = new URL(`http://localhost:8000${req.url}`)
-
-  console.log("url : ", myUrl.searchParams.get("title"))
   
   switch (myUrl.pathname) {
     case "/todos" :
-      res.writeHead(200, { "Content-Type": "application/json" });
-      return res.end(JSON.stringify(todos));
+      returnedResponse(todos,res);
     case "/create" :
-      return  createTodo(myUrl.searchParams.get("title"), res)
+      return  createTask(myUrl.searchParams.get("title"), res)
     case "/read" :
-      let myid = myUrl.searchParams.get("id");
-      let mytitle = myUrl.searchParams.get("title");
-      let mycompleted = myUrl.searchParams.get("completed");
-      return readTask(myid, mytitle, mycompleted, res); 
+      return readTask(getParameters("id",myUrl), getParameters("title",myUrl), getParameters("completed",myUrl), res); 
     case "/update" :
-      const selectedid = myUrl.searchParams.get("id");
-      let newtitle = myUrl.searchParams.get("title");
-      let newcompleted = myUrl.searchParams.get("completed");
-      return updateTask(selectedid, newtitle, newcompleted, res); 
+      return updateTask(getParameters("id",myUrl), getParameters("title",myUrl), getParameters("completed",myUrl), res); 
     case "/delete" :   
       return deleteTask(myUrl.searchParams.get("id"), res);
     default:
@@ -45,8 +39,3 @@ const server = http.createServer(requestListener as any);
 server.listen(port, host, () => {
   console.log(`Server is running on http://${host}:${port}`);
 });
-
-
-
-
-

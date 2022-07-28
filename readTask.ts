@@ -1,15 +1,7 @@
 import { ServerResponse } from "http";
 import { todos } from "./todos"
-const returnedResponse = (data: Record<string, any>, res: ServerResponse) => {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(data));
-}
-
-const throwErr = (msg: string) => {
-    throw new Error(
-        msg
-    )
-}
+import { returnedResponse } from "./returnedResponse";
+import { throwErr } from "./throwErr";
 
 export const readTask = (myid: string | null, mytitle: string | null,
     mycompleted: string | null, res: ServerResponse) => {
@@ -20,10 +12,10 @@ export const readTask = (myid: string | null, mytitle: string | null,
                 returnedResponse(todos.filter(task => task.title === mytitle), res) :
             (mycompleted !== null) ?
                 returnedResponse(todos.filter(task => task.completed === (mycompleted === "true" ? true : false)), res) : 
-                throwErr("we have a problem")
+                throwErr("there is no valid property.");
 
     }
-    catch (error) {
-        console.log("error");
+    catch (error:any) {
+        returnedResponse(error.message,res);   
     }
 }

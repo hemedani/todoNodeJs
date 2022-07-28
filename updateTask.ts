@@ -1,28 +1,24 @@
 import { ServerResponse } from "http";
 import { todos } from "./todos"
+import { returnedResponse } from "./returnedResponse";
+import { throwErr } from "./throwErr";
+
+const index=(myid:string)=>todos.findIndex(task => task.id === +myid);
 
 export const updateTask = (myid: string | null, mytitle: string | null,
     mycompleted: string | null, res: ServerResponse) => {
     try {
-        if (myid === null) {
-            throw new Error("there is no id");
+        (myid===null)?
+            throwErr("there is no id") : 
+        (mytitle!==null) ?
+            todos[index(myid)]["title"] = mytitle :
+        (mycompleted!==null) ?
+            todos[index(myid)]["completed"]= !todos[index(myid)]["completed"] :
+        throwErr("there is no valid property.")
 
-        }
-        if (mytitle !== null) {
-            todos[todos.findIndex(task => task.id === +myid)]["title"] = mytitle;
-        }
-        else if (mycompleted !== null) {
-            let index = todos.findIndex(task => task.id === +myid);
-            todos[index]["completed"] = !todos[index]["completed"];
-        }
-        else {
-            throw new Error("You have entered invalid property.");
-        }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(todos));
-
+       returnedResponse(todos,res); 
     }
-    catch (error) {
-        console.log("error");
+    catch (error:any) {
+        returnedResponse(error.message,res);
     }
 }

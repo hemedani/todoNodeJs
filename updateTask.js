@@ -2,26 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTask = void 0;
 const todos_1 = require("./todos");
+const returnedResponse_1 = require("./returnedResponse");
+const throwErr_1 = require("./throwErr");
+const index = (myid) => todos_1.todos.findIndex(task => task.id === +myid);
 const updateTask = (myid, mytitle, mycompleted, res) => {
     try {
-        if (myid === null) {
-            throw new Error("there is no id");
-        }
-        if (mytitle !== null) {
-            todos_1.todos[todos_1.todos.findIndex(task => task.id === +myid)]["title"] = mytitle;
-        }
-        else if (mycompleted !== null) {
-            let index = todos_1.todos.findIndex(task => task.id === +myid);
-            todos_1.todos[index]["completed"] = !todos_1.todos[index]["completed"];
-        }
-        else {
-            throw new Error("You have entered invalid property.");
-        }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(todos_1.todos));
+        (myid === null) ?
+            (0, throwErr_1.throwErr)("there is no id") :
+            (mytitle !== null) ?
+                todos_1.todos[index(myid)]["title"] = mytitle :
+                (mycompleted !== null) ?
+                    todos_1.todos[index(myid)]["completed"] = !todos_1.todos[index(myid)]["completed"] :
+                    (0, throwErr_1.throwErr)("there is no valid property.");
+        (0, returnedResponse_1.returnedResponse)(todos_1.todos, res);
     }
     catch (error) {
-        console.log("error");
+        (0, returnedResponse_1.returnedResponse)(error.message, res);
     }
 };
 exports.updateTask = updateTask;

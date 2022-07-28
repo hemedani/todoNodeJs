@@ -1,4 +1,3 @@
-
 export let todos = [
   { id: 1, title: "Learn TypeScript", completed: false },
   { id: 2, title: "Learn React", completed: false },

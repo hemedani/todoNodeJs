@@ -1,19 +1,16 @@
-
 import { ServerResponse } from "http";
 import { todos } from "./todos"
+import { returnedResponse } from "./returnedResponse";
+import { throwErr } from "./throwErr";
 
 export const deleteTask = (myid: string | null, res: ServerResponse) => {
     try {
-        if (myid !== null) {
-            todos.splice(todos.findIndex(task => task.id === +myid), 1);
-        }
-        else {
-            throw new Error("there is no id");
-        }
-        res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(todos));
+        (myid !== null) ?
+            todos.splice(todos.findIndex(task => task.id === +myid), 1) :
+            throwErr("there is no id")
+        returnedResponse(todos,res);
     }
-    catch (error) {
-        console.log("error");
+    catch (error :any) {
+        returnedResponse(error.message,res);
     }
 }

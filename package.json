@@ -6,7 +6,7 @@
   "author": "Syd Amir <hemedani@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.6.1",
+    "@types/node": "^18.6.2",
     "@types/prompt-sync": "^4.1.1",
     "prompt-sync": "^4.2.0"
   }
