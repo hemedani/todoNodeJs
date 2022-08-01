@@ -1,22 +1,16 @@
-import { ServerResponse } from "http";
 import { todos } from "./todos"
-import { returnedResponse } from "./returnedResponse";
 import { throwErr } from "./throwErr";
+import { Response, Request, NextFunction } from "express";
 
-const pushTask=(title : string , res : ServerResponse)=>
-{
-  todos.push({id: todos.length+1, title, completed: false});
-  returnedResponse(todos,res);
-}
-
-export const createTask = (title: string | null, res: ServerResponse) => {
-
+export const createTask = (req:Request , res:Response, next: NextFunction) => {
     try {
-      (title === null) ?
-      throwErr("there is no title parameter.") : 
-      pushTask(title, res)
+      req.body.title!==null ?
+      todos.push({id: todos.length+1, title :req.body.title, completed: false}):
+      throwErr("there is no title.")
+
+      res.send(todos);
     } catch (error : any) 
     {
-      returnedResponse(error.message,res);        
+      res.status(400).send(error.message);
     }
 }

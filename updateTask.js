@@ -2,22 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTask = void 0;
 const todos_1 = require("./todos");
-const returnedResponse_1 = require("./returnedResponse");
 const throwErr_1 = require("./throwErr");
 const index = (myid) => todos_1.todos.findIndex(task => task.id === +myid);
-const updateTask = (myid, mytitle, mycompleted, res) => {
+const checkProperties = (myid, req, res) => {
+    todos_1.todos[index(myid)]["title"] = req.body.title ? req.body.title : todos_1.todos[index(myid)]["title"];
+    todos_1.todos[index(myid)]["completed"] = req.body.completed ? req.body.completed : todos_1.todos[index(myid)]["completed"];
+};
+const updateTask = (myid, req, res) => {
     try {
         (myid === null) ?
             (0, throwErr_1.throwErr)("there is no id") :
-            (mytitle !== null) ?
-                todos_1.todos[index(myid)]["title"] = mytitle :
-                (mycompleted !== null) ?
-                    todos_1.todos[index(myid)]["completed"] = !todos_1.todos[index(myid)]["completed"] :
-                    (0, throwErr_1.throwErr)("there is no valid property.");
-        (0, returnedResponse_1.returnedResponse)(todos_1.todos, res);
+            checkProperties(myid, req, res);
+        res.send(todos_1.todos);
     }
     catch (error) {
-        (0, returnedResponse_1.returnedResponse)(error.message, res);
+        res.status(400).send(error.message);
     }
 };
 exports.updateTask = updateTask;
