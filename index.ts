@@ -10,12 +10,13 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
+routes(app)
 // app.use('/',require('./routes'));
-app.use((req : Request, res : Response, next : NextFunction) => {
-  routes(req, res);
-  next();
-}
-);
+// app.use((req : Request, res : Response, next : NextFunction) => {
+//   routes(req, res);
+//   next();
+// }
+// );
 app.listen(port, () => {
   console.log(`Server is running on http://${host}:${port}`);
 });

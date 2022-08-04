@@ -10,9 +10,8 @@ const readTask_1 = require("./readTask");
 const updateTask_1 = require("./updateTask");
 const deleteTask_1 = require("./deleteTask");
 const express_1 = __importDefault(require("express"));
-// const express=require('express');
 const router = express_1.default.Router();
-function routes(req, res) {
+const routes = (app) => {
     // todos list
     router.get("/todos", (req, res, next) => {
         res.send(todos_1.todos);
@@ -38,6 +37,6 @@ function routes(req, res) {
         (0, deleteTask_1.deleteTask)(req.params.id, res);
         next();
     });
-    //  module.exports=router
-}
+};
 exports.routes = routes;
+// module.exports=router

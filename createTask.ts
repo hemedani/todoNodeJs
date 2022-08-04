@@ -4,7 +4,7 @@ import { Response, Request, NextFunction } from "express";
 
 export const createTask = (req:Request , res:Response) => {
     try {
-      req.body.title ?
+      req.body.title!==null ?
       todos.push({id: todos.length+1, title :req.body.title, completed: false}):
       throwErr("there is no title.")
 

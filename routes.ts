@@ -4,18 +4,14 @@ import { readTask } from "./readTask";
 import { updateTask } from "./updateTask";
 import { deleteTask } from "./deleteTask";
 import { Response, Request, NextFunction } from "express";
-import express from "express"
-// const express=require('express');
-const router=express.Router();
-export function routes(req : Request, res : Response)
-{
-
+import express, {Express} from "express"
+const router = express.Router();
+export const routes = (app: Express) => {
     // todos list
     router.get("/todos",(req:Request,res:Response, next : NextFunction)=>{
       res.send(todos);
       next();
     })
-    
     // create task
     router.post("/create" , (req:Request, res:Response, next : NextFunction) => {
         createTask(req, res);
@@ -38,6 +34,6 @@ export function routes(req : Request, res : Response)
         deleteTask(req.params.id,res);
         next();
     })
+  }
     
-  //  module.exports=router
-}
+    // module.exports=router
