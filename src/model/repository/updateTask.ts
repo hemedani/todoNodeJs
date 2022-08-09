@@ -32,7 +32,7 @@ export const updateTask = async (myid: string, req: Request, res: Response) => {
 
         const newTodos = checkProperties(myid, todos, title, completed);
 
-        await writeTodo(JSON.stringify(newTodos))
+        await writeTodo(JSON.stringify(newTodos,null,2));
         res.send(newTodos);
     }
     catch (error: any) {

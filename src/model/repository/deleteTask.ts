@@ -11,7 +11,7 @@ export const deleteTask = async (myid: string, res: Response) => {
             todos.splice(todos.findIndex((task: any) => task.id === +myid), 1) :
             throwErr("there is no id")
 
-        await writeTodo(JSON.stringify(todos));
+        await writeTodo(JSON.stringify(todos,null,2));
         res.send(todos);
         
     }

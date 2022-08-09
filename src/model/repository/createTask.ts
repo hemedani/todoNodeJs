@@ -10,7 +10,7 @@ export const createTask = async (req: Request, res: Response) => {
       todos.push({ id: todos.length + 1, title: req.body.title, completed: false }) :
       throwErr("there is no title.")
 
-    await writeTodo(JSON.stringify(todos));
+    await writeTodo(JSON.stringify(todos,null,2));
 
     res.send(todos);
   } catch (error: any) {

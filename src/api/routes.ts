@@ -10,9 +10,7 @@ export const routes = (app: Express) => {
 
   // todos list
   app.get("/todos", async (req: Request, res: Response, next: NextFunction) => {
-    console.log("method GET /todos");
     await readAllTask(res);
-    console.log("readAllTasks finnished");
     next();
   })
   // create task
@@ -38,5 +36,3 @@ export const routes = (app: Express) => {
     next();
   })
 }
-
-    // module.exports=router
